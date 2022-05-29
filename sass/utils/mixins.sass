@@ -13,9 +13,18 @@
 	font-weight: #{$weight}
 	font-style: #{$style}
 
-@mixin adaptiveProp($prop, $start_value, $end_value, $container, $min_width)
-	@media (max-width: #{$container + 0.2}px) and (min-width: #{$min_width + 0.8}px)
-		#{$prop}: calc(#{$end_value}px + (#{$start_value} - #{$end_value}) * ((100vw - #{$min_width}px) / (#{$container} - #{$min_width})))
+@mixin adaptiveProp($property, $start_value, $end_value, $container, $min_width, $type: 0)
+	$addsize: $start_value - $end_value
+	@if $type=='max-width' // Только на ширине меньше контейнера
+		#{$property}: $start_value + px
+		@media (max-width: #{$container + px})
+			#{$property}: calc(#{$end_value}px + #{$addsize} * ((100vw - #{$min_width}px) / (#{$container} - #{$min_width})))
+	@else if $type=='min-width' // Только на ширине больше контейнера
+		#{$property}: $start_value + px
+		@media (min-width: #{$container + px})
+			#{$property}: calc(#{$end_value}px + #{$addsize} * ((100vw - #{$min_width}px) / (#{$container} - #{$min_width})))
+	@else if $type==0 // Всегда
+		#{$property}: calc(#{$end_value}px + #{$addsize} * ((100vw - #{$min_width}px) / (#{$container} - #{$min_width})))
 
 @mixin background($url, $size, $position: 'center', $repeat: 'no-repeat')
 	background-image: url(#{$url})

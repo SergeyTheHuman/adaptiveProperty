@@ -11,3 +11,22 @@
 @import components/header
 @import components/footer
 
+body
+	background-color: #5a5a5a
+	display: flex
+	flex-direction: column
+	justify-content: center
+	align-items: center
+
+.title
+	margin-bottom: 1em
+	font-weight: 600
+	text-align: center
+	@include adaptiveProp('font-size', 50, 20, 1920, 320)
+
+.text
+	@include adaptiveProp('font-size', 20, 18, 1920, 1024, 'max-width')
+	@include adaptiveProp('font-size', 18, 10, 1024, 320, 'max-width')
+	padding: 0 10vw
+	max-width: 100%
+	line-height: 1.8em
